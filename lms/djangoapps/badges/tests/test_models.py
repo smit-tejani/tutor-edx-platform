@@ -53,8 +53,10 @@ class BadgeImageConfigurationTest(TestCase):
         Verify that the image validator is triggered when cleaning the model.
         """
         with open(f'{TEST_DATA_DIR}/badges/unbalanced.png', mode='rb') as image_handle:
-            pytest.raises(ValidationError, CourseCompleteImageConfiguration(mode='test2', icon=ImageFile(image_handle))
-                        .full_clean)
+            pytest.raises(
+                ValidationError,
+                CourseCompleteImageConfiguration(mode='test2', icon=ImageFile(image_handle)).full_clean
+            )
 
 
 class DummyBackend:
@@ -136,12 +138,13 @@ class BadgeClassTest(ModuleStoreTestCase):
         exception.
         """
         course_key = CourseFactory.create(metadata={'issue_badges': False}).location.course_key
-        with pytest.raises(CourseBadgesDisabledError), open(f'{TEST_DATA_DIR}/badges/good.png', mode='rb') as image_handle:
-            BadgeClass.get_badge_class(
-                slug='test_slug', issuing_component='test_component', description='Attempted override',
-                criteria='test', display_name='Testola', image_file_handle=image_handle,
-                course_id=course_key,
-            )
+        with pytest.raises(CourseBadgesDisabledError):
+            with open(f'{TEST_DATA_DIR}/badges/good.png', mode='rb') as image_handle:
+                BadgeClass.get_badge_class(
+                    slug='test_slug', issuing_component='test_component', description='Attempted override',
+                    criteria='test', display_name='Testola', image_file_handle=image_handle,
+                    course_id=course_key,
+                )
 
     def test_get_badge_class_create(self):
         """
@@ -196,8 +199,11 @@ class BadgeClassTest(ModuleStoreTestCase):
         """
         Verify handing incomplete data for required fields when making a badge class raises an Integrity error.
         """
-        with pytest.raises(IntegrityError), self.allow_transaction_exception(), open(f'{TEST_DATA_DIR}/badges/good.png', mode='rb') as image_handle:
-            BadgeClass.get_badge_class(slug='new_slug', issuing_component='new_component', image_file_handle=image_handle)
+        with pytest.raises(IntegrityError), self.allow_transaction_exception():
+            with open(f'{TEST_DATA_DIR}/badges/good.png', mode='rb') as image_handle:
+                BadgeClass.get_badge_class(
+                    slug='new_slug', issuing_component='new_component', image_file_handle=image_handle
+                )
 
     def test_get_for_user(self):
         """
@@ -230,8 +236,12 @@ class BadgeClassTest(ModuleStoreTestCase):
         Verify that the image validator is triggered when cleaning the model.
         """
         with open(f'{TEST_DATA_DIR}/badges/unbalanced.png', mode='rb') as image_handle:
-            pytest.raises(ValidationError, BadgeClass(slug='test', issuing_component='test2', criteria='test3',
-                                                    description='test4', image=ImageFile(image_handle)).full_clean)
+            pytest.raises(
+                ValidationError,
+                BadgeClass(
+                    slug='test', issuing_component='test2', criteria='test3',
+                    description='test4', image=ImageFile(image_handle)).full_clean
+            )
 
 
 class BadgeAssertionTest(ModuleStoreTestCase):
