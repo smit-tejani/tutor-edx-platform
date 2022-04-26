@@ -17,7 +17,7 @@ from xblock.fields import ScopeIds
 
 from common.djangoapps.student.tests.factories import UserFactory
 from lms.djangoapps.badges.tests.factories import BadgeClassFactory
-from lms.djangoapps.badges.tests.test_models import get_image
+from lms.djangoapps.certificates.tests.test_models import TEST_DATA_DIR
 from lms.djangoapps.lms_xblock.runtime import LmsModuleSystem
 from xmodule.modulestore.django import ModuleI18nService  # lint-amnesty, pylint: disable=wrong-import-order
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase  # lint-amnesty, pylint: disable=wrong-import-order
@@ -207,10 +207,11 @@ class TestBadgingService(ModuleStoreTestCase):
         premade_badge_class = BadgeClassFactory.create()
         # Ignore additional parameters. This class already exists.
         # We should get back the first class we created, rather than a new one.
-        badge_class = badge_service.get_badge_class(
-            slug='test_slug', issuing_component='test_component', description='Attempted override',
-            criteria='test', display_name='Testola', image_file_handle=get_image('good')
-        )
+        with open(f'{TEST_DATA_DIR}/badges/good.png', mode='rb') as image_handle:
+            badge_class = badge_service.get_badge_class(
+                slug='test_slug', issuing_component='test_component', description='Attempted override',
+                criteria='test', display_name='Testola', image_file_handle=image_handle
+            )
         # These defaults are set on the factory.
         assert badge_class.criteria == 'https://example.com/syllabus'
         assert badge_class.display_name == 'Test Badge'
