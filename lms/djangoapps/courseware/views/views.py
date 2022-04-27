@@ -91,7 +91,8 @@ from lms.djangoapps.courseware.user_state_client import DjangoXBlockUserStateCli
 from lms.djangoapps.courseware.utils import (
     _use_new_financial_assistance_flow,
     create_financial_assistance_application,
-    is_eligible_for_financial_aid
+    is_eligible_for_financial_aid,
+    get_financial_assistance_application_status
 )
 from lms.djangoapps.edxnotes.helpers import is_feature_enabled
 from lms.djangoapps.experiments.utils import get_experiment_user_metadata_context
@@ -2021,6 +2022,7 @@ def financial_assistance_form(request, course_id=None):
     """Render the financial assistance application form page."""
     user = request.user
     disabled = False
+    applications_status_response = None
     if course_id:
         disabled = True
     enrolled_courses = get_financial_aid_courses(user, course_id)
@@ -2031,8 +2033,14 @@ def financial_assistance_form(request, course_id=None):
     annual_incomes = [
         {'name': _(income), 'value': income} for income in incomes  # lint-amnesty, pylint: disable=translation-of-non-string
     ]
-    if ENABLE_NEW_FINANCIAL_ASSISTANCE_FLOW.is_enabled():
+    if course_id and _use_new_financial_assistance_flow(course_id):
         submit_url = 'submit_financial_assistance_request_v2'
+        has_already_applied_applications, applications_status_response = \
+            get_financial_assistance_application_status(request.user.id, course_id)
+        if not has_already_applied_applications:
+            log.error(applications_status_response)
+            applications_status_response = None
+        applications_status_response = [{'id': 101, 'status': 'RECEIVED'}, {'id': 202, 'status': 'ACCEPTED'}]
     else:
         submit_url = 'submit_financial_assistance_request'
 
@@ -2049,6 +2057,7 @@ def financial_assistance_form(request, course_id=None):
             'country': str(user.profile.country.name),
         },
         'submit_url': reverse(submit_url),
+        'applications_status_response': applications_status_response,
         'fields': [
             {
                 'name': 'course',
