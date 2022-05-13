@@ -1,5 +1,5 @@
-# from django.apps import AppConfig
+from django.apps import AppConfig
 
 
-# class HandsonpracticalConfig(AppConfig):
-#     name = 'HandsOnPractical'
+class HandsonpracticalConfig(AppConfig):
+    name = 'lms.djangoapps.HandsOnPractical'
