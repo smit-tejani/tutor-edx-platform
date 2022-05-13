@@ -489,6 +489,15 @@ urlpatterns += [
         name='courseware_position',
     ),
 
+    # hands on practical form page
+    re_path(
+        r'^courses/{}/hands_on_practical_form'.format(
+            settings.COURSE_ID_PATTERN,
+        ),
+        courseware_views.hands_on_practical_form,
+        name='hands_on_practical_form',
+    ),
+
     # progress page
     re_path(
         r'^courses/{}/progress$'.format(
