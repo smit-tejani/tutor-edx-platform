@@ -489,15 +489,6 @@ urlpatterns += [
         name='courseware_position',
     ),
 
-    # hands on practical form page
-    re_path(
-        r'^courses/{}/hands_on_practical_form'.format(
-            settings.COURSE_ID_PATTERN,
-        ),
-        courseware_views.hands_on_practical_form,
-        name='hands_on_practical_form',
-    ),
-
     # progress page
     re_path(
         r'^courses/{}/progress$'.format(
@@ -1024,22 +1015,6 @@ if getattr(settings, 'PROVIDER_STATES_URL', None):
             name='courseware_xblock_handler_provider_state',
         )
     ]
-
-# save_for_later API urls
-if settings.ENABLE_SAVE_FOR_LATER:
-    urlpatterns += [
-        path('', include('lms.djangoapps.save_for_later.urls')),
-    ]
-
-# Enhanced Staff Grader (ESG) URLs
-urlpatterns += [
-    path('api/ora_staff_grader/', include('lms.djangoapps.ora_staff_grader.urls', 'ora-staff-grader')),
-]
-
-# Scheduled Bulk Email (Instructor Task) URLs
-urlpatterns += [
-    path('api/instructor_task/', include('lms.djangoapps.instructor_task.rest_api.urls')),
-]
 
 urlpatterns +=[
     path(r'^hands-on-practical/', include('lms.djangoapps.HandsOnPractical.urls')),
