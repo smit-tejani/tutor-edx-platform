@@ -3192,12 +3192,6 @@ INSTALLED_APPS = [
     # Content Library LTI 1.3 Support.
     'pylti1p3.contrib.django.lti1p3_tool_config',
 
-    # For edx ace template tags
-    'edx_ace',
-
-    # Blockstore
-    'blockstore.apps.bundles',
-
     # For students to register in hands on practical form
     'lms.djangoapps.HandsOnPractical',
 ]
