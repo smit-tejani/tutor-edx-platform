@@ -144,6 +144,9 @@ class CourseOverview(TimeStampedModel):
 
     history = HistoricalRecords()
 
+    # custom field
+    show_consultation_form = BooleanField(default=False)
+
     @classmethod
     def _create_or_update(cls, course):  # lint-amnesty, pylint: disable=too-many-statements
         """
@@ -251,6 +254,9 @@ class CourseOverview(TimeStampedModel):
         course_overview.proctoring_provider = course.proctoring_provider
         course_overview.proctoring_escalation_email = course.proctoring_escalation_email
         course_overview.allow_proctoring_opt_out = course.allow_proctoring_opt_out
+
+        # custom field
+        course_overview.show_consultation_form = course.show_consultation_form
 
         if not CatalogIntegration.is_enabled():
             course_overview.language = course.language

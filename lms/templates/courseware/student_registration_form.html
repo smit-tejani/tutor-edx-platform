@@ -33,7 +33,7 @@ rel='stylesheet'>
 
 <%include file="/courseware/course_navigation.html" args="active_page='hands_on_practical_form'" />
 
-
+% if course.show_consultation_form:
     % if show_form:
     <main id="main" aria-label="Content" tabindex="-1">
 
@@ -134,6 +134,11 @@ rel='stylesheet'>
     <h1>Registration are closed temporarily</h1>
 
     % endif
+
+    % else:
+<h1>These Feature is Not Currently Available</h1>
+
+% endif
 
 
 

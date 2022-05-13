@@ -678,6 +678,16 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             </div>
           % endif
 
+          <!-- Show Consultation Form Checkbox -->
+          <ol class="list-input">
+            <li class="field text" id="field-consultation-form">
+              <h3>Show Hands On Practical form</h3>
+              <input type="checkbox" id="consultation-form" value="false"/>
+              <label for="consultation-form">${_("Student can fill hands on practical form in Course Tab")}</label><br>
+            </li>
+          </ol>
+          <!-- Show Consultation Form Checkbox End -->
+
           % if settings.FEATURES.get("LICENSING", False):
             <hr class="divide" />
 

@@ -131,6 +131,9 @@ class CourseDetails:
         course_details.learning_info = course_descriptor.learning_info
         course_details.instructor_info = course_descriptor.instructor_info
 
+        # custom field
+        course_details.show_consultation_form = course_descriptor.show_consultation_form
+
         # Default course license is "All Rights Reserved"
         course_details.license = getattr(course_descriptor, "license", "all-rights-reserved")
 
@@ -297,6 +300,11 @@ class CourseDetails:
                 and 'self_paced' in jsondict
                 and jsondict['self_paced'] != descriptor.self_paced):
             descriptor.self_paced = jsondict['self_paced']
+            dirty = True
+
+        # custom field
+        if 'show_consultation_form' in jsondict and jsondict['show_consultation_form'] != descriptor.show_consultation_form:
+            descriptor.show_consultation_form = jsondict['show_consultation_form']
             dirty = True
 
         if dirty:

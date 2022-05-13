@@ -89,6 +89,7 @@ class EmailString(String):
     """
     Parse String with email validation
     """
+
     def from_json(self, value):
         if value:
             validate_email(value)
@@ -207,6 +208,7 @@ class ProctoringProvider(String):
     ProctoringProvider field, which includes validation of the provider
     and default that pulls from edx platform settings.
     """
+
     def from_json(self, value):
         """
         Return ProctoringProvider as full featured Python type. Perform validation on the provider
@@ -1018,6 +1020,17 @@ class CourseFields:  # lint-amnesty, pylint: disable=missing-class-docstring
             "external systems such as CRM software. Enter a dictionary of values in JSON format, such as "
             "{ \"my_custom_setting\": \"value\", \"other_setting\": \"value\" }"
         ),
+        scope=Scope.settings
+    )
+
+    # custom field
+    show_consultation_form = Boolean(
+        display_name=_("Show Consultation Form"),
+        help=_(
+            "Enter true or false. If true, student will be redirected to consultation form before enrolling in particular"
+            "course"
+        ),
+        default=True,
         scope=Scope.settings
     )
 
