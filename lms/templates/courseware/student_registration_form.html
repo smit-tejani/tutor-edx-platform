@@ -1,0 +1,135 @@
+## mako
+<%namespace name='static' file='../static_content.html'/>
+<%inherit file="../main.html" />
+
+<%!
+from django.urls import reverse
+%>
+
+<%block name="headextra">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+href='https://cdn.jsdelivr.net/combine/npm/fullcalendar-scheduler@5.10.0/main.min.css,npm/fullcalendar-scheduler@5.10.0/main.min.css'
+rel='stylesheet'>
+<link rel="stylesheet" href="${static.url('css/hands_on_practical/hands_on_practical.css')}">
+
+</%block>
+
+
+
+    % if show_form:
+    <div class="container-fluid">
+
+        <h1 class="container-fluid">Hands On Practical</h1><br>
+
+        <h6 class="container-fluid para">
+            <p>Here you can book into your Hands-On Practical with New Energy Academy.</p>
+            <p>we have several training partners throughout the Philippines, where you can attend
+            face-to-face practical training over 3 days.</p>
+            <p>Before booking your Hands-On Practical, we strongly recommend completion of
+            the following New Energy Academy courses, or having the equivalent knowledge 
+            from other sources:</p>
+            - Workplace Health and Safety<br>
+            - DC Electricity<br>
+            - Solar Radiation<br>
+            - AC Electricity<br>
+            - PV Fundamentals<br>
+            - Inverters<br>
+            - Mounting Systems<br>
+            - Balance of System<br>
+            - Site Survey<br>
+            - System Installation<br>
+            - System Commissioning<br>
+            - System Maintenance<br>
+            - System Troubleshooting</p>
+            <p>Please use the form below to book a training date and location.</p> 
+        <p> All sessions are subject to minimum numbers – we will confirm the dates via email 14 days from
+            the start date, and we recommend not booking non-refundable accommodation
+            or transport before this time.</p>
+            <p>A cancellation fee of $50 will apply for change-of-date or cancellation within 14 
+            days of the start date.</p>
+        </h6><br>
+
+        <a class="upcoming-events" href="${reverse('event_calendar')}" target="_blank">View Upcoming Dates</a>
+
+        <h4 class="already-registered">You Have Already Registered For the event</h4>
+        <h4 class="student-registered">Thank You for registering</h4>
+        
+        <form id="registration-form" >
+            <div class="form-group container-fluid">
+                <label for="fullName">Full Name</label>
+                <input type="text" class="form-control form-rounded" id="fullName" placeholder="Enter Full Name" name="FullName" value="${user.first_name} ${user.last_name}">
+                <span class="full_name errors"></span>
+            </div>
+
+            <div class="form-group container-fluid">
+                <label for="email">Email</label>
+                <input type="email" class="form-control form-rounded" id="email" placeholder="Enter Email" name="Email" value="${request.user.email}">
+                <span class="errors email"></span>
+            </div>
+
+            <div class="form-group container-fluid">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="number" class="form-control form-rounded" id="phoneNumber" name="PhoneNumber"
+                    placeholder="Enter Phone Number">
+                    <span class="errors phone_number"></span>
+            </div>
+
+            <div class="form-group container-fluid">
+                <label for="fullName">Contact Name</label>
+                <input type="text" class="form-control form-rounded" id="contactName" placeholder="Enter Contact Name" name="ContactName">
+                <span class="contact_name errors"></span>
+            </div>
+
+            <div class="form-group container-fluid">
+                <label for="fullName">Contact Phone Number</label>
+                <input type="number" class="form-control form-rounded" id="contactPhoneNumber" placeholder="Enter Contact Phone Number" name="ContactPhoneNumber">
+                <span class="contact_phone_number errors"></span>
+            </div>
+
+            <div class="form-group container-fluid">
+                <label for="fullName">Any special dietary or other requirements (Optional)</label>
+                <textarea  class="form-control form-rounded" id="otherRequirements" placeholder="Enter other requirements if any" name="OtherRequirements"></textarea>
+                <span class="other_requirements errors"></span>
+            </div>
+
+            <div class="form-group container-fluid">
+                <label for="fullName">Any other comments (Optional)</label>
+                <textarea class="form-control form-rounded" id="comments" placeholder="Enter Comments if any" name="Comments"></textarea>
+                <span class="other_comments errors"></span>
+            </div><br>
+
+            
+
+            <input type="hidden" value="${course.id}" name="course_id">
+            
+            
+
+            <div class="container-fluid">
+                <input type="button" class="btn btn-warning book-now-rounded book-now button" value="Book Now">
+            </div>
+        </form>
+
+    </div><br><br><br>
+    % else:
+    <h1>Registration are closed temporarily</h1>
+
+    % endif
+
+
+
+
+<%block name="js_extra">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.7/additional-methods.min.js"></script> -->
+
+<script src="${static.url('js/courseware/hands_on_practical.js')}"></script>
+
+</%block>

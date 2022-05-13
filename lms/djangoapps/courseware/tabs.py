@@ -98,6 +98,24 @@ class SyllabusTab(EnrolledTab):
         return getattr(course, 'syllabus_present', False)
 
 
+class HandsOnPracticalTab(EnrolledTab):
+    """
+    A tab for Student Registration in Hands On Practical 
+    """
+    name = 'New Tab'
+    title = gettext_noop('Student Registration Form')
+    view_name = 'hands_on_practical_form'
+    is_dynamic = True
+
+    @classmethod
+    def is_enabled(cls, course, user=None):
+        """Returns true if this tab is enabled."""
+        
+        if super().is_enabled(course, user=user):
+            print(super().is_enabled(course, user=user),"\n\n\n\n\n")
+            return True
+
+
 class ProgressTab(EnrolledTab):
     """
     The course progress view.

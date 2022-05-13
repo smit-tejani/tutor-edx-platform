@@ -135,6 +135,8 @@ from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
 from xmodule.tabs import CourseTabList
 from xmodule.x_module import STUDENT_VIEW
 
+from lms.djangoapps.HandsOnPractical.models import FormFillingDates
+
 from ..context_processor import user_timezone_locale_prefs
 from ..entrance_exams import user_can_skip_entrance_exam
 from ..module_render import get_module, get_module_by_usage_id, get_module_for_descriptor
@@ -1123,6 +1125,27 @@ def dates(request, course_id):
     }
 
     return render_to_response('courseware/dates.html', context)
+
+@login_required
+def hands_on_practical_form(request,course_id):
+    """
+    It returns HTML form and context where current course and other details are send
+
+
+    **arguments**
+    course_id: course id of current course
+    request: WSGI request
+    """
+    course_overview = CourseOverview.get_from_id(course_id)
+
+    object = FormFillingDates.objects.get(course=course_id)
+    show_form = FormFillingDates.show_form(object)
+    
+    context = {
+        'course': course_overview,
+        'show_form': show_form,
+    }
+    return render_to_response('courseware/student_registration_form.html', context)
 
 
 @transaction.non_atomic_requests
