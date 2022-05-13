@@ -1,0 +1,46 @@
+## mako
+<%namespace name='static' file='../static_content.html'/>
+<%inherit file="../main.html" />
+
+<%block name="headextra">
+<link href="https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css" rel="stylesheet" />
+<link href="https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.css" rel="stylesheet" />
+<link href="https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="${static.url('css/hands_on_practical/hands_on_practical.css')}">
+</%block>
+
+
+<div id='calendar'></div>
+
+
+<%block name="js_extra">
+
+<script src="https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/interaction@4.3.0/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.js"></script>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: ['interaction', 'dayGrid', 'timeGrid'],
+        initialView: 'dayGridMonth',
+        eventOrder: "sort",
+        events: '/hands-on-practical/api/events-data/',
+        eventSources:[
+            {
+                url: "/hands-on-practical/api/student-data/",
+                color: "yellow",
+                textColor: "black",
+            },
+        ],
+    });
+    calendar.render();
+});
+
+</script>
+
+
+</%block>

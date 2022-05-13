@@ -3268,6 +3268,9 @@ INSTALLED_APPS = [
 
     # Blockstore
     'blockstore.apps.bundles',
+
+    # For students to register in hands on practical form
+    'lms.djangoapps.HandsOnPractical',
 ]
 
 ######################### CSRF #########################################
