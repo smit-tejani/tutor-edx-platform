@@ -1,0 +1,124 @@
+label.error{
+    color: red;
+}
+
+.errors{
+    color: red;
+}
+
+#calendar{
+    width: 1100px; 
+    margin: 40px auto;
+    color: black !important;
+}
+
+.fc .fc-button-primary:hover{
+    background-color: #1e2b37;
+}
+
+
+.book-now-rounded
+{
+  	border-radius: 1rem !important;
+  	background-color: #EFC10A !important;
+  	width: 175px;
+    border-bottom: 0 !important;
+    border: 0 !important;
+    text-shadow: none !important;
+    color: black !important;
+
+    &:hover{
+        background-color: #d39e00 !important;
+        border-color: #c69500 !important;
+        background-image: none !important;
+    }
+
+    &:active,:focus{
+        box-shadow: none !important;
+    }
+}
+
+.upcoming-events{
+    background-color: #EFC10A !important;
+    color:  black !important;
+    // padding: 14px 25px;
+    height: 34px;
+    width: 200px;
+    line-height: 2 !important;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius:  1rem;
+
+    &:hover{
+        background-color: #d39e00 !important;
+        border-color: #c69500 ;
+    }
+    
+    
+}
+.form-view{
+    background-color: #EFC10A !important;
+    color:  black !important;
+    // padding: 14px 25px;
+    height: 34px;
+    width: 200px;
+    line-height: 2 !important;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius:  1rem;
+
+    &:hover{
+        background-color: #d39e00 !important;
+        border-color: #c69500 ;
+    }
+}
+
+a:not(.btn), a:not(.btn):hover, a:not(.btn):focus, a:visited:not(.btn):hover, a:visited:not(.btn):focus {
+    color: black;
+    text-decoration: none;
+}
+
+input[type="submit"], input[type="button"], button, .button{
+    background-image: none;
+    box-shadow: none !important;
+
+    &:hover{
+        background-image: none;
+    }
+}
+textarea:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="tel"]:focus{
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-color: #80bdff;
+}
+
+button:hover:not(:disabled){
+    background-image: none;
+}
+
+.already-registered{
+    text-align: center;
+    color: red;
+    display: none;
+}
+
+.student-registered{
+    text-align: center;
+    color: green;
+    display: none;
+}
+
+#registration-form{
+    margin-top: 50px;
+}
+
+.seat-fulled{
+    color: red;
+    text-align: center;
+    display: none;
+}
+
+textarea, input[type="text"], input[type="url"], input[type="email"], input[type="password"], input[type="tel"]{
+    font: inherit;
+}

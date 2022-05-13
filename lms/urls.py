@@ -1026,5 +1026,5 @@ if getattr(settings, 'PROVIDER_STATES_URL', None):
     ]
 
 urlpatterns +=[
-    path(r'^hands-on-practical/', include('lms.djangoapps.HandsOnPractical.urls')),
+    path('hands-on-practical/', include('lms.djangoapps.HandsOnPractical.urls')),
 ]

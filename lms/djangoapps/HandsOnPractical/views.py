@@ -70,7 +70,7 @@ class StudentRegistrationAPI(viewsets.ModelViewSet):
         user_exist_flag = False          # flag that returns true if user has already registered for the session
 
         email = request.GET.get("email")
-
+        
         user_exist_data = list(self.queryset.filter(email=email).values())
 
         if user_exist_data:
@@ -95,9 +95,9 @@ class DisplayCoursesListAPI(viewsets.ModelViewSet):
         for i in all_data:
             practical_list = {}
             practical_list['title'] = i.display_name
-            practical_list['start'] = datetime.datetime.strptime(str(i.start_date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+            practical_list['start'] = datetime.datetime.strptime(str(i.start.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
             if i.end_date:
-                practical_list['end'] = datetime.datetime.strptime(str(i.end_date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+                practical_list['end'] = datetime.datetime.strptime(str(i.end.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
             else:
                 practical_list['end'] = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d").strftime("%Y-%m-%d")
             all_practical_list.append(practical_list)

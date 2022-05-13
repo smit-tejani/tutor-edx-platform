@@ -1,6 +1,6 @@
 // regex to allow only letters and spaces in input field
-jQuery.validator.addMethod("lettersonly", function(value, element) {
-  return this.optional(element) || /^[a-zA-Z\s]*$/i.test(value);
+jQuery.validator.addMethod("lettersonly", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z\s]*$/i.test(value);
 })
 
 // It checks all the input field of Form And Displays the error if any
@@ -79,8 +79,9 @@ $(".book-now").on("click", function (e) {
             success: function (data) {
                 if (data['user_exist_data']) {
                     // If User has already registered
-                    $(".already-registered").css("display", "block")
-                    $(".student-registered").css("display", "none")
+                    console.log(data['user_exist_data']);
+                    $(".already-registered").css("display", "block");
+                    $(".student-registered").css("display", "none");
                 }
                 else {
                     // if user has not registered
