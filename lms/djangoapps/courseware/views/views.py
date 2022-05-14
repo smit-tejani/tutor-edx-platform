@@ -1140,8 +1140,12 @@ def hands_on_practical_form(request,course_id):
     """
     course_overview = CourseOverview.get_from_id(course_id)
 
-    object = FormFillingDates.objects.get(course=course_id)
-    show_form = FormFillingDates.show_form(object)
+    try:
+        object = FormFillingDates.objects.get(course=course_id)
+        show_form = FormFillingDates.show_form(object)
+    except:
+        show_form = False
+        
     
     context = {
         'course': course_overview,
