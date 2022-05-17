@@ -122,8 +122,10 @@ class HandsOnPracticalTab(EnrolledTab):
     def is_enabled(cls, course, user=None):
         """Returns true if this tab is enabled."""
         
-        if super().is_enabled(course, user=user):
+        if course.show_consultation_form:
             return True
+        else:
+            return False
 
 
 class ProgressTab(EnrolledTab):
