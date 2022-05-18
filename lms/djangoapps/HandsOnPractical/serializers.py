@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from lms.djangoapps.HandsOnPractical.models import FormFillingDates, StudentConsultationList
+from lms.djangoapps.HandsOnPractical.models import FormFillingDate, StudentConsultationList
 
 
 class StudentConsultationListSerializer(serializers.ModelSerializer):
@@ -11,5 +11,5 @@ class StudentConsultationListSerializer(serializers.ModelSerializer):
 
 class FormFillingDatesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FormFillingDates
+        model = FormFillingDate
         fields = "__all__"

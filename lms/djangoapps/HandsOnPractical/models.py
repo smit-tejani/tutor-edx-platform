@@ -7,13 +7,21 @@ from opaque_keys.edx.django.models import CourseKeyField
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 
-class FormFillingDates(TimeStampedModel):
-    course = models.OneToOneField(CourseOverview, db_index=True, on_delete=models.CASCADE, default='course-v1:edX+DemoX+Demo_Course')
+class CoursePracticalDate(TimeStampedModel):
+    courseoverview = models.OneToOneField(CourseOverview, db_index=True, on_delete=models.CASCADE, default='course-v1:edX+DemoX+Demo_Course')
+
+    def __str__(self):
+        return self.courseoverview.display_name
+
+
+class FormFillingDate(TimeStampedModel):
+    courseoverview = models.ForeignKey(CoursePracticalDate, db_index=True, on_delete=models.CASCADE, default='course-v1:edX+DemoX+Demo_Course')
+    practical_name = models.CharField(max_length=50, default='Practical')
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
     def __str__(self):
-        return self.course.display_name
+        return self.practical_name
 
     def show_form(self):
         """
@@ -29,7 +37,7 @@ class FormFillingDates(TimeStampedModel):
 
 
 class StudentConsultationList(TimeStampedModel):
-    course_id = CourseKeyField(max_length=255)
+    practical_name = models.ForeignKey(FormFillingDate, on_delete=models.CASCADE, default='10')
     full_name = models.CharField(max_length=50)
     email = models.EmailField()
     phone_number = models.CharField(max_length=10)

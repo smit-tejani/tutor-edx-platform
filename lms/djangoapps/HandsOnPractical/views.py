@@ -1,13 +1,12 @@
 import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import EmailMultiAlternatives
 from django.views import generic
 from rest_framework import response, status, viewsets
 
 from lms.djangoapps.course_api.views import CourseListView
-from lms.djangoapps.HandsOnPractical.models import StudentConsultationList
-from lms.djangoapps.HandsOnPractical.serializers import  StudentConsultationListSerializer
+from lms.djangoapps.HandsOnPractical.models import StudentConsultationList, FormFillingDate
+from lms.djangoapps.HandsOnPractical.serializers import StudentConsultationListSerializer
 
 
 class StudentRegistrationForm(LoginRequiredMixin, generic.TemplateView):
@@ -19,8 +18,6 @@ class StudentRegistrationForm(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(StudentRegistrationForm, self).get_context_data(**kwargs)
-        import pdb
-        pdb.set_trace()
         context.update({'course_id': kwargs['course_id']})
         return context
 
@@ -45,10 +42,9 @@ class StudentRegistrationAPI(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        # import pdb;pdb.set_trace()
         if serializer.is_valid():
             serializer.save()
-            
+
             # session_detais = Practical.objects.get(pk=serializer.data.get('session'))
             # template = 'emails/email.html'
             # message = render_to_string(template, {
@@ -68,10 +64,11 @@ class StudentRegistrationAPI(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         user_exist_flag = False          # flag that returns true if user has already registered for the session
-
-        email = request.GET.get("email")
         
-        user_exist_data = list(self.queryset.filter(email=email).values())
+        email = request.GET.get("email")
+        practical_name = request.GET.get("practical_name")
+
+        user_exist_data = list(self.queryset.filter(email=email, practical_name=practical_name).values())
 
         if user_exist_data:
             user_exist_flag = True
@@ -90,16 +87,14 @@ class DisplayCoursesListAPI(viewsets.ModelViewSet):
         """
         To return the Course list which is to be displayed in full calendar
         """
-        all_data = CourseListView.get_queryset(self)
+
+        all_data = FormFillingDate.objects.all()
         all_practical_list = []
         for i in all_data:
             practical_list = {}
-            practical_list['title'] = i.display_name
-            practical_list['start'] = datetime.datetime.strptime(str(i.start.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
-            if i.end_date:
-                practical_list['end'] = datetime.datetime.strptime(str(i.end.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
-            else:
-                practical_list['end'] = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+            practical_list['title'] = i.practical_name
+            practical_list['start'] = datetime.datetime.strptime(str(i.start_date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+            practical_list['end'] = datetime.datetime.strptime(str(i.end_date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
             all_practical_list.append(practical_list)
 
         return response.Response(all_practical_list)

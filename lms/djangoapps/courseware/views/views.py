@@ -97,7 +97,7 @@ from lms.djangoapps.courseware.user_state_client import DjangoXBlockUserStateCli
 from lms.djangoapps.edxnotes.helpers import is_feature_enabled
 from lms.djangoapps.experiments.utils import get_experiment_user_metadata_context
 from lms.djangoapps.grades.api import CourseGradeFactory
-from lms.djangoapps.HandsOnPractical.models import FormFillingDates
+from lms.djangoapps.HandsOnPractical.models import FormFillingDate
 from lms.djangoapps.instructor.enrollment import uses_shib
 from lms.djangoapps.instructor.views.api import require_global_staff
 from lms.djangoapps.survey import views as survey_views
@@ -1139,17 +1139,18 @@ def hands_on_practical_form(request,course_id):
     request: WSGI request
     """
     course_overview = CourseOverview.get_from_id(course_id)
+    queryset = FormFillingDate.objects.all()
 
-    try:
-        object = FormFillingDates.objects.get(course=course_id)
-        show_form = FormFillingDates.show_form(object)
-    except:
-        show_form = False
+    # try:
+    #     object = FormFillingDates.objects.get(course=course_id)
+    #     show_form = FormFillingDates.show_form(object)
+    # except:
+    #     show_form = False
         
     
     context = {
         'course': course_overview,
-        'show_form': show_form,
+        'queryset':queryset
     }
     return render_to_response('courseware/student_registration_form.html', context)
 
