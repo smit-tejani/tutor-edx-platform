@@ -1138,14 +1138,11 @@ def hands_on_practical_form(request,course_id):
     course_id: course id of current course
     request: WSGI request
     """
-    course_overview = CourseOverview.get_from_id(course_id)
-    queryset = FormFillingDate.objects.all()
-
-    # try:
-    #     object = FormFillingDates.objects.get(course=course_id)
-    #     show_form = FormFillingDates.show_form(object)
-    # except:
-    #     show_form = False
+    try:
+        course_overview = CourseOverview.get_from_id(course_id)
+        queryset = FormFillingDate.objects.all()
+    except:
+        log.error("Error has occured")
         
     
     context = {

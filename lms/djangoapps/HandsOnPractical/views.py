@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -7,6 +8,8 @@ from rest_framework import response, status, viewsets
 from lms.djangoapps.course_api.views import CourseListView
 from lms.djangoapps.HandsOnPractical.models import StudentConsultationList, FormFillingDate
 from lms.djangoapps.HandsOnPractical.serializers import StudentConsultationListSerializer
+
+log = logging.getLogger("edx.courseware")
 
 
 class StudentRegistrationForm(LoginRequiredMixin, generic.TemplateView):
@@ -64,7 +67,7 @@ class StudentRegistrationAPI(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         user_exist_flag = False          # flag that returns true if user has already registered for the session
-        
+
         email = request.GET.get("email")
         practical_name = request.GET.get("practical_name")
 
@@ -88,7 +91,11 @@ class DisplayCoursesListAPI(viewsets.ModelViewSet):
         To return the Course list which is to be displayed in full calendar
         """
 
-        all_data = FormFillingDate.objects.all()
+        try:
+            all_data = FormFillingDate.objects.all()
+        except:
+            log.error("No Data retrieved")
+
         all_practical_list = []
         for i in all_data:
             practical_list = {}
